@@ -1,0 +1,25 @@
+version: "3.7"
+
+services:
+  node:
+    image: dmtools
+    build:
+      context: .
+      target: node
+    stdin_open: true
+    tty: true
+    working_dir: /app
+    hostname: 0.0.0.0
+    entrypoint:
+      - npm
+    command:
+      - start
+    ports:
+      - 3000:3000
+    volumes:
+      - ./dmtools/src:/app/src
+      - ./dmtools/public:/app/public
+      - /app/node_modules
+
+volumes:
+  node-data:
