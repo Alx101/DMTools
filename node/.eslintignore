@@ -1,0 +1,10 @@
+!/**/.eslintrc.js
+!/*.js
+!/.storybook/
+/.next/
+/nginx/
+/static/
+/build/
+/static/storybook/
+/storybook-static/
+node_modules
