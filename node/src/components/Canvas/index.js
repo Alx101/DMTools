@@ -1,10 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
+import Forge from "../../forge";
 
 import makeContext from "./utils";
+import { useWindowSize } from "../../utils/hooks";
 
-const Cv = styled.div`
+const Container = styled.div`
   display: flex;
   flex: 1;
 `;
@@ -16,18 +18,26 @@ const StyledCanvas = styled.canvas`
 
 const Canvas = () => {
   const canvasRef = React.useRef();
+  const containerRef = React.useRef();
+  const [forge, setForge] = React.useState(undefined);
+  const size = useWindowSize();
+
   React.useEffect(() => {
-    if (canvasRef.current !== undefined) {
-      const ctx = makeContext(canvasRef.current.getContext("2d"));
-      ctx.rect(5, 5, 50, 50, "blue");
-      console.log(ctx);
+    if (canvasRef.current !== undefined && containerRef.current !== undefined && forge === undefined) {
+      setForge(new Forge("renderer", containerRef.current));
     }
-  }, [canvasRef]);
+  }, [canvasRef, containerRef]);
+
+  React.useEffect(() => {
+    if (forge !== undefined) {
+      forge.resize();
+    }
+  }, [forge, size]);
 
     return (
-      <Cv>
-        <StyledCanvas ref={canvasRef}/>
-      </Cv>
+      <Container ref={containerRef}>
+        <StyledCanvas id="renderer" ref={canvasRef}/>
+      </Container>
     );
 };
 

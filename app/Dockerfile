@@ -1,43 +1,35 @@
-FROM python:3.7 AS app-prod
+# Use an official Python runtime as a parent image
+FROM python:3.7 as app
+LABEL maintainer="alex.ornberg@me.com"
 
-# Install app systems dependencies
-# - libpq-dev           postgres, psycopg2
-# - postgresql-client   psql for wait-for-postgres.sh
-RUN \
-    # System deps
-    apt-get update && apt-get install -y \
-        libpq-dev \
-        postgresql-client && \
-    \
-    # Wait script
-    curl -sSL https://github.com/ufoscout/docker-compose-wait/releases/download/2.4.0/wait -o /bin/wait && \
-        chmod +x /bin/wait && \
-    \
-    # Install Poetry using their official installer. This method, compared to
-    # installing from PyPi, ensures that the Poetry depencies are isolated from
-    # the project dependencies. Not having them separated caused some problems.
-    # (See related issue: https://github.com/sdispater/poetry/issues/653).
-    (curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python) && \
-    \
-    # Make app dir
-    mkdir /app
+# Set environment varibles
+# Pinned versions
+ENV PIP_PIP_VERSION 19.3.1
+ENV PIP_PIP_TOOLS_VERSION 4.2.0
+ENV APT_MAKE_VERSION 4.2.1-*
+ENV APT_WAIT_FOR_IT_VERSION  0.0~git20180723-1
 
-COPY Makefile ./app/Makefile
+ENV PYTHONUNBUFFERED 1
+ENV DJANGO_ENV dev
 
-WORKDIR /app
+COPY ./reqs /code/reqs/
+# Install any needed packages specified in requirements.txt
+RUN set -x && pip install pip==$PIP_PIP_VERSION pip-tools==$PIP_PIP_TOOLS_VERSION && \
+    pip install --require-hashes --pre -r /code/reqs/requirements.txt && \
+    pip check
 
+RUN pip install gunicorn
 
-# Copy source code
-COPY . src
+RUN set -x && \
+    apt-get update && apt-get install --no-install-recommends -y \
+    make=$APT_MAKE_VERSION \
+    wait-for-it=$APT_WAIT_FOR_IT_VERSION
 
-WORKDIR /app/src
+# Copy the current directory contents into the container at /code/
+COPY ./src /code/
 
-RUN pip install --user --requirement reqs/requirements.txt
+# Set the working directory to /code/
+WORKDIR /code/
 
-# Stage: app-test
-# To be used when running tests.
-FROM app-prod AS app-test
-
-# Stage: app-dev
-# To be used when running the image locally for development purposes.
-FROM app-test AS app-dev
+EXPOSE 8000
+CMD exec gunicorn app.wsgi:application --bind 0.0.0.0:8000 --workers 3 --reload

@@ -23,17 +23,16 @@ services:
   app:
     build:
       context: app
-      target: app-dev
+      target: app
     stdin_open: true
     tty: true
-    command: /bin/bash -c "/bin/wait && python manage.py runserver 0.0.0.0:8000"
+    command: gunicorn app.wsgi:application --bind 0.0.0.0:8000 --workers 3 --reload
     depends_on:
       - postgres
     ports:
       - 8000:8000
     volumes:
-      - ./app:/app/src:cached
-      - ./.bash_env:/root:cached
+      - ./app/src:/code/src:cached
 
   postgres:
     image: postgres:11.4
