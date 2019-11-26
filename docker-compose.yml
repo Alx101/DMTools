@@ -32,10 +32,16 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./app/src:/code/src:cached
+      - ./app/src:/code
+    env_file:
+      - ./app/envs/dev.env
 
   postgres:
     image: postgres:11.4
+    environment:
+      POSTGRES_DB: dmtools
+      POSTGRES_USER: dm
+      POSTGRES_PASSWORD: beholder
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
