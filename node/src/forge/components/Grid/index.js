@@ -12,13 +12,6 @@ export default class Grid {
       x: x - diffX,
       y: y - diffY
     };
-    if (diffX >= this.gridSize/2) {
-      result.x += this.gridSize;
-    }
-  
-    if (diffY >= this.gridSize/2) {
-      result.y += this.gridSize;
-    }
     
     return result;
   }

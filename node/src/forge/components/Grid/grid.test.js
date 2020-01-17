@@ -14,7 +14,7 @@ test('Grid initializes with provided custom values', () => {
 
 test('Grid snaps points to grid', () => {
   let grid = new Grid(10);
-  let point = grid.snapToGrid(11, 45);
+  let point = grid.snapToGrid(11, 49);
   expect(point.x).toBe(10);
-  expect(point.y).toBe(50);
+  expect(point.y).toBe(40);
 });

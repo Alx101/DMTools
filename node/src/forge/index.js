@@ -15,6 +15,7 @@ export default class Forge {
       height: referenceContainer.offsetHeight,
     });
     this.grid = new Grid();
+    this.bindEvents();
     this.render();
   }
 
@@ -34,9 +35,18 @@ export default class Forge {
       height: this.grid.gridSize,
       selectable: false,
     });
-    console.log(x, y);
-    console.log(snappedCoords);
     this.ctx.add(rect);
+  }
+  
+  bindEvents() {
+    this.ctx.on({
+      'mouse:up': (e) => {
+        console.log(e, "click");
+        let point = this.ctx.getPointer(e);
+        point = this.grid.snapToGrid(point.x, point.y);
+        this.spawnObject(point.x, point.y);
+      }
+    });
   }
 
   render() {
