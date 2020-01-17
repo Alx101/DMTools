@@ -40,9 +40,9 @@ coreschema==0.0.4 \
 django-migration-linter==1.4.0 \
     --hash=sha256:7cb2d1fc88ebd7bb27191ab26f4965ed14306e3e94d5e40b5b3895b924777d90 \
     --hash=sha256:a7bbc44268f1ff3877506111c29248dbb4d4ec8d1a53953cdc80b118a789d83e
-django==2.2.7 \
-    --hash=sha256:16040e1288c6c9f68c6da2fe75ebde83c0a158f6f5d54f4c5177b0c1478c5b86 \
-    --hash=sha256:89c2007ca4fa5b351a51a279eccff298520783b713bf28efb89dfb81c80ea49b
+django==2.2.8 \
+    --hash=sha256:a4ad4f6f9c6a4b7af7e2deec8d0cbff28501852e5010d6c2dc695d3d1fae7ca0 \
+    --hash=sha256:fa98ec9cc9bf5d72a08ebf3654a9452e761fbb8566e3f80de199cbc15477e891
 djangorestframework==3.10.3 \
     --hash=sha256:5488aed8f8df5ec1d70f04b2114abc52ae6729748a176c453313834a9ee179c8 \
     --hash=sha256:dc81cbf9775c6898a580f6f1f387c4777d12bd87abf0f5406018d32ccae71090
