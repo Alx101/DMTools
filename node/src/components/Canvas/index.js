@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
-import Forge from "../../forge";
 
-import makeContext from "./utils";
+import Forge from "../../forge";
 import { useWindowSize } from "../../utils/hooks";
+import makeContext from "./utils";
 
 const Container = styled.div`
   display: flex;
@@ -23,10 +23,14 @@ const Canvas = () => {
   const size = useWindowSize();
 
   React.useEffect(() => {
-    if (canvasRef.current !== undefined && containerRef.current !== undefined && forge === undefined) {
+    if (
+      canvasRef.current !== undefined &&
+      containerRef.current !== undefined &&
+      forge === undefined
+    ) {
       setForge(new Forge("renderer", containerRef.current));
     }
-  }, [canvasRef, containerRef]);
+  }, [canvasRef, containerRef, forge]);
 
   React.useEffect(() => {
     if (forge !== undefined) {
@@ -34,11 +38,11 @@ const Canvas = () => {
     }
   }, [forge, size]);
 
-    return (
-      <Container ref={containerRef}>
-        <StyledCanvas id="renderer" ref={canvasRef}/>
-      </Container>
-    );
+  return (
+    <Container ref={containerRef}>
+      <StyledCanvas id="renderer" ref={canvasRef} />
+    </Container>
+  );
 };
 
 export default Canvas;

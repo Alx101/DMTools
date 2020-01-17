@@ -1,9 +1,8 @@
-const makePwrContext = (ctx) => {
+const makePwrContext = ctx => {
   return new PwrContext(ctx);
 };
 
 export class PwrContext {
-
   constructor(ctx) {
     this.ctx = ctx;
     window.addEventListener("resize", this.fixAspect);
@@ -11,8 +10,8 @@ export class PwrContext {
 
   fixAspect = () => {
     console.log("fixing size");
-    this.ctx.width = this.ctx.height *
-    (this.ctx.clientWidth / this.ctx.clientHeight);
+    this.ctx.width =
+      this.ctx.height * (this.ctx.clientWidth / this.ctx.clientHeight);
     console.log(this.ctx.width);
   };
 
@@ -20,7 +19,7 @@ export class PwrContext {
     const c = color || "#ff0000";
     this.ctx.fillStyle = color;
     this.ctx.fillRect(x, y, w, h);
-  }
-};
+  };
+}
 
 export default makePwrContext;

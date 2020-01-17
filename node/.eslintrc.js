@@ -1,4 +1,5 @@
 // eslint-disable-next-line no-undef
+"use safe";
 const baseRules = require("eslint-config-lydell");
 
 // eslint-disable-next-line no-undef
