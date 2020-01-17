@@ -1,9 +1,11 @@
 import { fabric } from "fabric";
+import Grid from "./components/Grid";
 
 export default class Forge {
   canvasId: undefined;
   ctx: undefined;
   container: undefined;
+  grid: undefined;
 
   constructor(canvasId, referenceContainer) {
     this.canvasId = canvasId;
@@ -12,6 +14,7 @@ export default class Forge {
       width: referenceContainer.offsetWidth,
       height: referenceContainer.offsetHeight,
     });
+    this.grid = new Grid();
     this.render();
   }
 
@@ -20,15 +23,24 @@ export default class Forge {
     this.ctx.setHeight(this.referenceContainer.offsetHeight);
     this.ctx.calcOffset();
   }
+  
+  spawnObject(x, y) {
+    let snappedCoords = this.grid.snapToGrid(x, y);
+    const rect = new fabric.Rect({
+      left: snappedCoords.x,
+      top: snappedCoords.y,
+      fill: "red",
+      width: this.grid.gridSize,
+      height: this.grid.gridSize,
+      selectable: false,
+    });
+    console.log(x, y);
+    console.log(snappedCoords);
+    this.ctx.add(rect);
+  }
 
   render() {
-    const rect = new fabric.Rect({
-      left: 1,
-      top: 1,
-      fill: "red",
-      width: 20,
-      height: 20,
-    });
-    this.ctx.add(rect);
+    this.ctx.absolutePan(new fabric.Point(0, 0));
+    this.spawnObject(50, 1);
   }
 }

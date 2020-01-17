@@ -11,3 +11,10 @@ test('Grid initializes with provided custom values', () => {
   expect(grid).not.toBeUndefined();
   expect(grid.gridSize).toBe(10);
 });
+
+test('Grid snaps points to grid', () => {
+  let grid = new Grid(10);
+  let point = grid.snapToGrid(11, 45);
+  expect(point.x).toBe(10);
+  expect(point.y).toBe(50);
+});
