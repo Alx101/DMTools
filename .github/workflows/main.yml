@@ -14,8 +14,10 @@ jobs:
     - name: Run nodejs tests
       run: |
         cd node
+        npm ci
         make test
-    - name: Run python tests
-      run: |
-        cd app
-        make test
+# TODO: Add django test
+#    - name: Run python tests
+#      run: |
+#        cd app
+#        make test
