@@ -1,3 +1,5 @@
+import { fabric } from 'fabric';
+
 export default class Grid {
   gridSize: 15;
 
@@ -16,10 +18,19 @@ export default class Grid {
     return result;
   }
   
-  drawGrid(context) {
-    context.beginPath();
-    context.moveTo(0, 0);
-    context.lineTo(300, 150);
-    context.stroke();
+  spawnGrid(context) {
+    for (let x = 0; x < 50; ++x) {
+      context.add(new fabric.Line([
+        x * this.gridSize,
+        0,
+        x * this.gridSize,
+        1000,
+      ], {
+        stroke: 'gray',
+        strokeWidth: 1,
+        selectable: false,
+        evented: false,
+      }));
+    }
   }
 }
