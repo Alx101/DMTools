@@ -13,11 +13,6 @@ export default class Forge {
   constructor(canvasId, referenceContainer) {
     this.canvasId = canvasId;
     this.referenceContainer = referenceContainer;
-    /*this.ctx = new fabric.Canvas(canvasId, {
-      width: referenceContainer.offsetWidth,
-      height: referenceContainer.offsetHeight,
-      selection: false,
-    });*/
     this.config = {
       type: Phaser.WEBGL,
       width: 800,
@@ -49,26 +44,15 @@ export default class Forge {
   }
 
   resize() {
-    this.game.renderer.resize(this.referenceContainer.offsetWidth, this.referenceContainer.offsetHeight);
-    //this.ctx.setWidth(this.referenceContainer.offsetWidth);
-    //this.ctx.setHeight(this.referenceContainer.offsetHeight);
-    //this.ctx.calcOffset();
+    //this.game.renderer.resize(this.referenceContainer.offsetWidth, this.referenceContainer.offsetHeight);
   }
   
   spawnObject(x, y) {
     let snappedCoords = this.grid.snapToGrid(x, y);
-    // const rect = new fabric.Rect({
-    //   left: snappedCoords.x,
-    //   top: snappedCoords.y,
-    //   fill: "red",
-    //   width: this.grid.gridSize,
-    //   height: this.grid.gridSize,
-    //   selectable: false,
-    // });
-    // this.ctx.add(rect);
   }
   
   bindEvents() {
+    
     /*this.ctx.on({
       'mouse:up': (e) => {
         if (this.ctx.findTarget(e) === undefined) {
